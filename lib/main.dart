@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Composants/drawerMenu.dart';
 // import 'package:flutter_blue/flutter_blue.dart';
 
 void main() {
@@ -26,31 +27,7 @@ class HomePageWidget extends StatelessWidget {
                   icon: const Icon(Icons.refresh))
             ]),
         body: const Center(child: Home2Widget()),
-        drawer: Drawer(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-            ),
-          ),
-          backgroundColor: Colors.grey,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                child: Text(
-                  'Menu',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-              LigneMenu('Listes des appareils', Icons.menu),
-              LigneMenu('Demo', Icons.play_arrow),
-              LigneMenu('Sauvegarde de fichier', Icons.file_download),
-              LigneMenu('Téléchargement', Icons.download),
-              LigneMenu('Paramètres', Icons.settings),
-            ],
-          ),
-        ),
+        drawer: const MenuDrawer(),
       ),
     );
   }
@@ -120,31 +97,6 @@ class _Home2WidgetState extends State<Home2Widget> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class LigneMenu extends StatelessWidget {
-  final String titre;
-  final IconData icone;
-
-  LigneMenu(this.titre, this.icone);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Row(
-        children: [
-          Icon(icone, color: Colors.white),
-          Text(
-            titre,
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ],
-      ),
-      onTap: () {
-        print('menu1');
-      },
     );
   }
 }
