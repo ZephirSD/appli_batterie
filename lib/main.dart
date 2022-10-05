@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'Composants/drawerMenu.dart';
-// import 'package:flutter_blue/flutter_blue.dart';
+import 'ligneBatterie.dart';
+import 'package:flutter_blue/flutter_blue.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(HomePageWidget());
@@ -20,6 +22,9 @@ class HomePageWidget extends StatelessWidget {
             ),
             backgroundColor: Colors.grey,
             actions: [
+              // GestureDetector(
+              //   onTap: ,
+              // )
               IconButton(
                   onPressed: (() {
                     print('test');
@@ -41,61 +46,12 @@ class Home2Widget extends StatefulWidget {
 }
 
 class _Home2WidgetState extends State<Home2Widget> {
-  bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.grey,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Icon(
-                  Icons.battery_0_bar,
-                  color: Colors.white,
-                ),
-                Column(
-                  children: [
-                    const Text(
-                      'Smart Lithium',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    const Text(
-                      '10560505012',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
-                Icon(
-                  Icons.signal_cellular_alt,
-                  color: Colors.white,
-                ),
-                Switch(
-                  activeColor: Colors.green,
-                  value: isSwitched,
-                  onChanged: (value) {
-                    setState(() {
-                      isSwitched = value;
-                      // if(value == true){
-
-                      // }else{
-
-                      // }
-                      print(value);
-                    });
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
+        LigneBatterie("Smart Lithium", "02305021", 2, true),
+        LigneBatterie("Smart Lithium", "05045025", 3, false),
       ],
     );
   }
