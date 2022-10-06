@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../Pages/pageAccueil.dart';
 import '../Pages/sauvFich.dart';
-import '../main.dart';
 import 'ligneMenu.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -27,12 +27,12 @@ class MenuDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
-          LigneMenu('Listes des appareils', Icons.menu, HomePageWidget()),
-          LigneMenu('Demo', Icons.play_arrow, NavSauvFich()),
-          LigneMenu(
-              'Sauvegarde de fichier', Icons.file_download, NavSauvFich()),
-          LigneMenu('Téléchargement', Icons.download, NavSauvFich()),
-          LigneMenu('Paramètres', Icons.settings, NavSauvFich()),
+          LigneMenu('Listes des appareils', Icons.menu, NavAccueilBat()),
+          LigneMenu('Demo', Icons.play_arrow, const NavSauvFich()),
+          LigneMenu('Sauvegarde de fichier', Icons.file_download,
+              const NavSauvFich()),
+          LigneMenu('Téléchargement', Icons.download, const NavSauvFich()),
+          LigneMenu('Paramètres', Icons.settings, const NavSauvFich()),
         ],
       ),
     );

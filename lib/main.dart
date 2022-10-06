@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'Composants/drawerMenu.dart';
-import 'package:flutter_blue/flutter_blue.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'Composants/ligneBatterie.dart';
+import 'package:flutter/services.dart';
+import 'Pages/pageAccueil.dart';
 
 void main() {
-  runApp(HomePageWidget());
+  Paint.enableDithering = true;
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  runApp(const HomePageWidget());
 }
 
 class HomePageWidget extends StatelessWidget {
@@ -13,37 +15,10 @@ class HomePageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-            title: const Center(
-              child: Text('Listes des appareils'),
-            ),
-            backgroundColor: Colors.grey,
-            actions: [
-              GestureDetector(
-                child: const Icon(Icons.refresh),
-                onTap: () async {
-                  var permissionBluetoothScan =
-                      await Permission.bluetoothScan.request().isGranted;
-                  var permissionBluetoothConnect =
-                      await Permission.bluetoothConnect.request().isGranted;
-                  if (permissionBluetoothScan && permissionBluetoothConnect) {
-                    FlutterBlue flutterBlue = FlutterBlue.instance;
-                    flutterBlue.startScan(timeout: const Duration(seconds: 4));
-                    flutterBlue.scanResults.listen((event) {
-                      for (ScanResult r in event) {
-                        print('${r.device.name}');
-                      }
-                    });
-                    flutterBlue.stopScan();
-                  }
-                },
-              )
-            ]),
-        body: const Center(child: Home2Widget()),
-        drawer: const MenuDrawer(),
+        body: Home2Widget(),
       ),
     );
   }
@@ -57,39 +32,45 @@ class Home2Widget extends StatefulWidget {
 }
 
 class _Home2WidgetState extends State<Home2Widget> {
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavAccueilBat(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        LigneBatterie(
-          "Smart test",
-          "02305021",
-          2,
-          isSwitched: false,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment(0.65, 1.15),
+          colors: [
+            Color.fromARGB(255, 124, 124, 124),
+            Color.fromARGB(255, 240, 184, 0),
+          ],
+          stops: [0.75, 1],
+          tileMode: TileMode.clamp,
         ),
-        LigneBatterie(
-          "Smart Lithium",
-          "05045025",
-          3,
-          isSwitched: false,
-        ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 200),
-        //   child: TextButton(
-        //     onPressed: () {},
-        //     child: Text('Ok'),
-        //     style: ButtonStyle(
-        //       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        //       backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
-        //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        //         RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(18.0),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // )
-      ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            "images/logo.png",
+            width: 300,
+          ),
+        ],
+      ),
     );
   }
 }
